@@ -1,0 +1,33 @@
+.search-box label {
+  display: flex;
+  gap: 1rem;
+}
+
+.country-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.country-flag {
+  max-width: 25rem;
+}
+
+.country-flag img {
+  height: auto;
+  width: 100%;
+}
+
+.matched-countries-box {
+  margin-top: 1rem;
+}
+
+.matched-countries-item,
+.weather-stats {
+  display: flex;
+  gap: 0.5rem
+}
+
+.weather-stats {
+  flex-direction: column;
+}

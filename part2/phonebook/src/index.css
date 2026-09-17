@@ -1,0 +1,31 @@
+input,
+.person-action {
+  margin-left: 1rem
+}
+
+.person-number {
+  font-size: 0.9rem;
+  margin-left: 1rem;
+}
+
+.notification {
+  display: inline-flex;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  max-width: max-content;
+  text-wrap: wrap;
+
+  &.notification--success {
+    color: green;
+    border-color: green;
+  }
+
+  &.notification--error {
+    color: red;
+    border-color: red;
+  }
+}
