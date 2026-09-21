@@ -17,7 +17,8 @@ morgan.token('post', function (req, _res) {
 })
 
 app.use(
-  express.json(), 
+  express.json(),
+  express.static('dist'),
   requestLogger, 
   morgan(':method :url :status :res[content-length] - :response-time ms :post')
 )
