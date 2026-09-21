@@ -113,6 +113,7 @@ app.post('/api/persons', (req, res) => {
   }
 
   phonebook = phonebook.concat(newPerson)
+  console.log(newPerson)
   res.json(newPerson)
 })
 
