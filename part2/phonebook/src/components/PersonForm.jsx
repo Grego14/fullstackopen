@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import phoneService from '../services/phonebook'
 
-const PersonForm = ({ persons, setPersons, setNotification }) => {
+const PersonForm = ({ setPersons, setNotification }) => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
 
@@ -12,39 +12,15 @@ const PersonForm = ({ persons, setPersons, setNotification }) => {
   const addPerson = (e) => {
     e.preventDefault()
 
-    const exists = persons.find((person => person.name.toLowerCase() === newName.toLowerCase()))
+    const newPerson = { name: newName, number: newNumber }
 
-    if(exists){
-      const editNumber = confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+    phoneService.create(newPerson).then(person => {
+      setPersons(prev => [...prev, person])
+      setNewName('')
+      setNewNumber('')
 
-      if(!editNumber) return
-
-      const updatedPerson = { ...exists, number: newNumber }
-
-      phoneService.editNumber(exists.id, updatedPerson)
-        .then(state => {
-          setPersons(persons.map(person => person.id === exists.id ? updatedPerson : person))
-          console.log('number was updated ->', state)
-        })
-        .catch((err) => {
-          setNotification({ 
-            type: 'error', 
-            message: `Information of ${exists.name} has already been removed from the server` 
-          })
-          console.error(err)
-        })
-    } else {
-      const newPerson = { name: newName, number: newNumber }
-
-      phoneService.create(newPerson).then(person => {
-        setPersons(prev => [...prev, person])
-        setNewName('')
-        setNewNumber('')
-
-
-        setNotification({ type: 'success', message: `Added ${newName}` })
-      })
-    }
+      setNotification({ type: 'success', message: `Added ${newName}` })
+    })
   }
 
   return (

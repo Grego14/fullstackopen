@@ -24,11 +24,4 @@ const remove = async (id) => {
   }
 }
 
-/**
- * @returns true if the number was updated sucessfully, false otherwise
-*/
-const editNumber = async (id, updatedPerson) => {
-  return axios.put(`${baseUrl}/${id}`, updatedPerson)
-}
-
-export default { getAll, create, remove, editNumber }
+export default { getAll, create, remove }
