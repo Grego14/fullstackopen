@@ -76,6 +76,23 @@ app.post('/api/persons', (req, res) => {
   })
 })
 
+app.put('/api/persons', (req, res) => {
+  const body = req.body
+  const { name, number } = body
+
+  if(!name) return res.status(404).json({ error: ERRORS.MISSING_NAME })
+  if(!number) return res.status(404).json({ error: ERRORS.MISSING_NUMBER })
+
+  Person.findOne({ name }).then(doc => {
+    doc.number = number
+
+    doc.save().then(savedPerson => {
+      console.log(savedPerson)
+      res.json(doc.toJSON())
+    })
+  })
+})
+
 const unknownEndpoint = (_re, res) => 
   res.status(404).send({ error: 'unknown endpoint' })
 

@@ -24,4 +24,14 @@ const remove = async (id) => {
   }
 }
 
-export default { getAll, create, remove }
+const editNumber = async (updatedEntry) => {
+  try {
+    const result = await axios.put(baseUrl, updatedEntry)
+    return result
+  } catch (err){
+    console.error(err)
+    return false
+  }
+}
+
+export default { getAll, create, remove, editNumber }

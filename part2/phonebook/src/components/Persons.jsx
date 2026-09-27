@@ -32,6 +32,7 @@ const Persons = ({ persons, setPersons, filter }) => {
 
   const getCopyLabel = (number) => number === lastCopied ? 'copied!' : 'copy'
 
+  console.log(persons)
   return (
     persons
     .filter(person => person.name.toLowerCase().match(filter))

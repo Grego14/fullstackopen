@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import phoneService from '../services/phonebook'
 
-const PersonForm = ({ setPersons, setNotification }) => {
+const PersonForm = ({ persons, setPersons, setNotification }) => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
 
@@ -13,14 +13,37 @@ const PersonForm = ({ setPersons, setNotification }) => {
     e.preventDefault()
 
     const newPerson = { name: newName, number: newNumber }
+    const exists = persons.find(person => person.name.toLowerCase() === newName.toLowerCase())
 
-    phoneService.create(newPerson).then(person => {
-      setPersons(prev => [...prev, person])
+    const success = () => {
       setNewName('')
       setNewNumber('')
 
       setNotification({ type: 'success', message: `Added ${newName}` })
-    })
+    }
+
+    if(exists) {
+      phoneService.editNumber(newPerson).then(updatedPerson => {
+        console.log('updated person', updatedPerson.data)
+        setPersons(prev => {
+          const updatedData = updatedPerson.data
+
+          return prev.map(person => {
+            if(person.name.toLowerCase() === updatedData.name.toLowerCase()) {
+              return updatedData
+            }
+
+            return person
+          })
+        })
+        success()
+      })
+    } else {
+      phoneService.create(newPerson).then(person => {
+        setPersons(prev => [...prev, person])
+        success()
+      })
+    }
   }
 
   return (
